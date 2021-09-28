@@ -3,13 +3,14 @@ class RestaurantsController < ApplicationController
     #GET /restaurants
     def index
         restaurants = Restaurant.all
-        render json: restaurants
+        render json: restaurants, except: [:created_at, :updated_at] 
     end
 
     # GET /restaurants/:id
     def show
         restaurant = Restaurant.find(params[:id])
-        render json: restaurant, include: :pizzas
+        render json: restaurant, serializer: RestaurantPizzaSerializer
+        #except: [:created_at, :updated_at], include: :pizzas, except: [:created_at, :updated_at] 
     end
 
     #DELETE /restaurants/:id
